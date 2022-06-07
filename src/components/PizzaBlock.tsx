@@ -1,27 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const PizzaBlock = () => {
+type PropsType = {
+    id: number
+    title: string
+    imageUrl: string
+    price: number
+    sizes: Array<number>
+    types: Array<number>
+}
+
+const PizzaBlock = ({id, title, imageUrl, price, sizes, types, ...props}: PropsType) => {
+
+    const [sizeIndex, setSizeIndex] = useState<number>(0)
+    const [typePizza, setTypePizza] = useState<number>(0)
+
+    const typeNames = ['тонкое', 'традиционное']
+
     return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {
+                        types.map((el, i) => {
+                            return (
+                                <li className={typePizza === i ? 'active' : ''}
+                                    onClick={() => setTypePizza(i)}>
+                                    {typeNames[el]}
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
                 <ul>
-                    <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {
+                        sizes.map((el, i) => {
+                            return (
+                                <li className={i === sizeIndex ? 'active' : ''}
+                                    onClick={() => setSizeIndex(i)}>
+                                    {el} см.
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от 395 ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <button className="button button--outline button--add">
                     <svg
                         width="12"
