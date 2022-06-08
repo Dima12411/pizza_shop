@@ -3,7 +3,7 @@ import './scss/app.scss'
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
-import PizzaBlock from "./components/PizzaBlock";
+import PizzaBlock from "./pizzaBlock/PizzaBlock";
 import pizzas from './assets/pizzas.json'
 
 export type PizzasObject = {
