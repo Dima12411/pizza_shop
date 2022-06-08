@@ -1,6 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Sort = () => {
+    const [showList, setShowList] = useState<boolean>(false)
+    const [selectSort, setSelectSort] = useState<number>(0)
+    const [sortBy, setSortBy] = useState<Array<string>>(['популярности', 'цене', 'алфавиту'])
+    const sortName = sortBy[selectSort]
+
+    const onClickShowList = () => {
+        setShowList(!showList)
+    }
+
+    const onClickSortingSelection = (index: number) => {
+        setSelectSort(index)
+        setShowList(false)
+    }
+
     return (
         <div className="sort">
             <div className="sort__label">
@@ -17,15 +31,24 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <span onClick={onClickShowList}>{sortName}</span>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {showList &&
+                <div className="sort__popup">
+                    <ul>
+                        {sortBy.map((el, i) => {
+                            return (
+                                <li
+                                    key={i}
+                                    className={selectSort === i ? 'active' : ''}
+                                    onClick={() => onClickSortingSelection(i)}>
+                                    {el}
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+            }
         </div>
     );
 };
