@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './scss/app.scss'
 import Header from "./components/Header";
-import Categories from "./components/Categories";
-import Sort from "./components/Sort";
-import PizzaBlock from "./pizzaBlock/PizzaBlock";
-import Skeleton from "./pizzaBlock/Skeleton";
+import Home from "./pages/Home";
+import {Route, Routes} from "react-router-dom";
+import NotFound from "./pages/NotFound";
+import Cart from "./pages/Cart";
 
 export type PizzasObject = {
     id: number
@@ -19,35 +19,16 @@ export type PizzasObject = {
 export type ArrayPizzas = Array<PizzasObject>
 
 function App() {
-    const [items, setItems] = useState<Array<PizzasObject>>([])
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-
-    useEffect(() => {
-        fetch('https://62a07fa2a9866630f81099fb.mockapi.io/items')
-            .then(res => res.json())
-            .then(res => {
-                setItems(res)
-                setIsLoading(false)
-            })
-    }, [])
-
     return (
         <div className="wrapper">
             <Header/>
             <div className="content">
                 <div className="container">
-                    <div className="content__top">
-                        <Categories/>
-                        <Sort/>
-                    </div>
-                    <h2 className="content__title">Все пиццы</h2>
-                    <div className="content__items">
-                        {
-                            isLoading
-                                ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-                                : items.map((el, index) => <PizzaBlock key={index} pizza={el}/>)
-                        }
-                    </div>
+                    <Routes>
+                        <Route path="/" element={ <Home/> }/>
+                        <Route path="cart" element={ <Cart/> }/>
+                        <Route path="*" element={ <NotFound/> }/>
+                    </Routes>
                 </div>
             </div>
         </div>

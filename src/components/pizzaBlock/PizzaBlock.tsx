@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {PizzasObject} from "../App";
+import {PizzasObject} from "../../App";
 
 type PropsType = {
     /*id: number
