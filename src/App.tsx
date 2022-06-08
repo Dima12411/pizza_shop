@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 import PizzaBlock from "./pizzaBlock/PizzaBlock";
-import pizzas from './assets/pizzas.json'
+import Skeleton from "./pizzaBlock/Skeleton";
 
 export type PizzasObject = {
     id: number
@@ -19,42 +19,39 @@ export type PizzasObject = {
 export type ArrayPizzas = Array<PizzasObject>
 
 function App() {
-    const [items, setItems] = useState<Array<PizzasObject | null>>([])
+    const [items, setItems] = useState<Array<PizzasObject>>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
         fetch('https://62a07fa2a9866630f81099fb.mockapi.io/items')
             .then(res => res.json())
             .then(res => {
                 setItems(res)
+                setIsLoading(false)
             })
     }, [])
 
-  return (
-      <div className="wrapper">
-        <Header />
-        <div className="content">
-          <div className="container">
-            <div className="content__top">
-              <Categories />
-              <Sort />
+    return (
+        <div className="wrapper">
+            <Header/>
+            <div className="content">
+                <div className="container">
+                    <div className="content__top">
+                        <Categories/>
+                        <Sort/>
+                    </div>
+                    <h2 className="content__title">Все пиццы</h2>
+                    <div className="content__items">
+                        {
+                            isLoading
+                                ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
+                                : items.map((el, index) => <PizzaBlock key={index} pizza={el}/>)
+                        }
+                    </div>
+                </div>
             </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {
-                    pizzas.map(el => {
-                        return (
-                            <PizzaBlock
-                                key={el.id}
-                                pizza={el}
-                            />
-                        )
-                    })
-                }
-            </div>
-          </div>
         </div>
-      </div>
-  );
+    );
 }
 
 export default App;
