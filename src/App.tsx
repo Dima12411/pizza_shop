@@ -6,6 +6,18 @@ import Sort from "./components/Sort";
 import PizzaBlock from "./components/PizzaBlock";
 import pizzas from './assets/pizzas.json'
 
+export type PizzasObject = {
+    id: number
+    imageUrl: string
+    title: string
+    types: Array<number>
+    sizes: Array<number>
+    price: number
+    category: number
+    rating: number
+}
+export type ArrayPizzas = Array<PizzasObject>
+
 function App() {
   return (
       <div className="wrapper">
@@ -22,12 +34,14 @@ function App() {
                     pizzas.map(el => {
                         return (
                             <PizzaBlock
-                                id={el.id}
+                                key={el.id}
+                                /*id={el.id}
                                 title={el.title}
                                 imageUrl={el.imageUrl}
                                 price={el.price}
                                 sizes={el.sizes}
-                                types={el.types}
+                                types={el.types}*/
+                                pizza={el}
                             />
                         )
                     })

@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
+import {PizzasObject} from "../App";
 
 type PropsType = {
-    id: number
+    /*id: number
     title: string
     imageUrl: string
     price: number
     sizes: Array<number>
-    types: Array<number>
+    types: Array<number>*/
+    pizza: PizzasObject
 }
 
-const PizzaBlock = ({id, title, imageUrl, price, sizes, types, ...props}: PropsType) => {
+const PizzaBlock = ({pizza, ...props}: PropsType) => {
 
     const [sizeIndex, setSizeIndex] = useState<number>(0)
     const [typePizza, setTypePizza] = useState<number>(0)
@@ -20,16 +22,16 @@ const PizzaBlock = ({id, title, imageUrl, price, sizes, types, ...props}: PropsT
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={imageUrl}
+                src={pizza.imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{title}</h4>
+            <h4 className="pizza-block__title">{pizza.title}</h4>
             <div className="pizza-block__selector">
                 <ul>
                     {
-                        types.map((el, i) => {
+                        pizza.types.map((el, i) => {
                             return (
-                                <li className={typePizza === i ? 'active' : ''}
+                                <li key={i} className={typePizza === i ? 'active' : ''}
                                     onClick={() => setTypePizza(i)}>
                                     {typeNames[el]}
                                 </li>
@@ -39,9 +41,9 @@ const PizzaBlock = ({id, title, imageUrl, price, sizes, types, ...props}: PropsT
                 </ul>
                 <ul>
                     {
-                        sizes.map((el, i) => {
+                        pizza.sizes.map((el, i) => {
                             return (
-                                <li className={i === sizeIndex ? 'active' : ''}
+                                <li key={i} className={i === sizeIndex ? 'active' : ''}
                                     onClick={() => setSizeIndex(i)}>
                                     {el} см.
                                 </li>
@@ -51,7 +53,7 @@ const PizzaBlock = ({id, title, imageUrl, price, sizes, types, ...props}: PropsT
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {price} ₽</div>
+                <div className="pizza-block__price">от {pizza.price} ₽</div>
                 <button className="button button--outline button--add">
                     <svg
                         width="12"
