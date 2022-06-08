@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './scss/app.scss'
 import Header from "./components/Header";
 import Categories from "./components/Categories";
@@ -19,6 +19,16 @@ export type PizzasObject = {
 export type ArrayPizzas = Array<PizzasObject>
 
 function App() {
+    const [items, setItems] = useState<Array<PizzasObject | null>>([])
+
+    useEffect(() => {
+        fetch('https://62a07fa2a9866630f81099fb.mockapi.io/items')
+            .then(res => res.json())
+            .then(res => {
+                setItems(res)
+            })
+    }, [])
+
   return (
       <div className="wrapper">
         <Header />
@@ -35,12 +45,6 @@ function App() {
                         return (
                             <PizzaBlock
                                 key={el.id}
-                                /*id={el.id}
-                                title={el.title}
-                                imageUrl={el.imageUrl}
-                                price={el.price}
-                                sizes={el.sizes}
-                                types={el.types}*/
                                 pizza={el}
                             />
                         )

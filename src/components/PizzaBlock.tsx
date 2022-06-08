@@ -68,7 +68,7 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
+                    <i>0</i>
                 </button>
             </div>
         </div>
