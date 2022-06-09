@@ -16,10 +16,11 @@ const Home = () => {
                 setItems(res)
                 setIsLoading(false)
             })
+        window.scrollTo(0, 0)
     }, [])
 
     return (
-        <>
+        <div className="container">
             <div className="content__top">
                 <Categories/>
                 <Sort/>
@@ -32,7 +33,7 @@ const Home = () => {
                         : items.map((el, index) => <PizzaBlock key={index} pizza={el}/>)
                 }
             </div>
-        </>
+        </div>
     );
 };
 
