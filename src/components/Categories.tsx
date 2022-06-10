@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 
-const Categories = () => {
+type PropsType = {
+    categoryId: number
+    setCategoryId: (categoryId: number) => void
+}
 
-    const [activeIndex, setActiveIndex] = useState<number>(0)
+const Categories = ({categoryId, setCategoryId, ...props}: PropsType) => {
 
     const category = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
     const onClickCategory = (index: number) => {
-        setActiveIndex(index)
+        setCategoryId(index)
     }
 
     return (
@@ -17,7 +20,7 @@ const Categories = () => {
                     category.map((el, i) => {
                         return (
                             <li
-                                key={i} className={activeIndex === i ? 'active' : ''}
+                                key={i} className={categoryId === i ? 'active' : ''}
                                 onClick={() => onClickCategory(i)}
                             >{el}</li>
                         )

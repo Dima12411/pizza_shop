@@ -8,21 +8,24 @@ import {PizzasObject} from "../App";
 const Home = () => {
     const [items, setItems] = useState<Array<PizzasObject>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [categoryId, setCategoryId] = useState<number>(0)
+    const [sortType, setSortType] = useState<number>(0)
 
     useEffect(() => {
-        fetch('https://62a07fa2a9866630f81099fb.mockapi.io/items')
+        setIsLoading(true)
+        fetch('https://62a07fa2a9866630f81099fb.mockapi.io/items?category=' + categoryId)
             .then(res => res.json())
             .then(res => {
                 setItems(res)
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [])
+    }, [categoryId, sortType])
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories/>
+                <Categories categoryId={categoryId} setCategoryId={setCategoryId}/>
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
