@@ -1,17 +1,25 @@
 import React, {useState} from 'react';
+import {sortByType} from "../pages/Home";
 
-const Sort = () => {
+type PropsType = {
+    sortType: sortByType
+    setSortType: (sortType: sortByType) => void
+}
+
+const Sort = ({sortType, setSortType, ...props}: PropsType) => {
     const [showList, setShowList] = useState<boolean>(false)
-    const [selectSort, setSelectSort] = useState<number>(0)
-    const [sortBy, setSortBy] = useState<Array<string>>(['популярности', 'цене', 'алфавиту'])
-    const sortName = sortBy[selectSort]
+    const [sortBy, setSortBy] = useState<Array<sortByType>>([
+        {name: 'популярности', sortProperty: 'rating'},
+        {name: 'цене', sortProperty: 'price'},
+        {name: 'алфавиту', sortProperty: 'title'}
+    ])
 
     const onClickShowList = () => {
         setShowList(!showList)
     }
 
-    const onClickSortingSelection = (index: number) => {
-        setSelectSort(index)
+    const onClickSortingSelection = (sort: sortByType) => {
+        setSortType(sort)
         setShowList(false)
     }
 
@@ -31,7 +39,7 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={onClickShowList}>{sortName}</span>
+                <span onClick={onClickShowList}>{sortType.name}</span>
             </div>
             {showList &&
                 <div className="sort__popup">
@@ -40,9 +48,9 @@ const Sort = () => {
                             return (
                                 <li
                                     key={i}
-                                    className={selectSort === i ? 'active' : ''}
-                                    onClick={() => onClickSortingSelection(i)}>
-                                    {el}
+                                    className={sortType.sortProperty === el.sortProperty ? 'active' : ''}
+                                    onClick={() => onClickSortingSelection(el)}>
+                                    {el.name}
                                 </li>
                             )
                         })}
