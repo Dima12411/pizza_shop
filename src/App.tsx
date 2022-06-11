@@ -20,7 +20,7 @@ export type ArrayPizzas = Array<PizzasObject>
 
 function App() {
     const [searchValue, setSearchValue] = useState<string>('')
-    console.log(searchValue, 'Input changed')
+
     return (
         <div className="wrapper">
             <Header searchValue={searchValue} setSearchValue={setSearchValue}/>

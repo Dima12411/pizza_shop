@@ -4,6 +4,7 @@ import Sort from "../components/Sort";
 import Skeleton from "../components/pizzaBlock/Skeleton";
 import PizzaBlock from "../components/pizzaBlock/PizzaBlock";
 import {PizzasObject} from "../App";
+import Pagination from "../components/Pagination/Pagination";
 
 type PropsType = {
     searchValue: string
@@ -18,6 +19,7 @@ const Home = ({searchValue, ...props}: PropsType) => {
     const [items, setItems] = useState<Array<PizzasObject>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [categoryId, setCategoryId] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     const [sortType, setSortType] = useState<sortByType>({
         name: 'популярности',
         sortProperty: 'rating'
@@ -29,14 +31,14 @@ const Home = ({searchValue, ...props}: PropsType) => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://62a07fa2a9866630f81099fb.mockapi.io/items?${category}&sortBy=${sortBy}&order=asc${search}`)
+        fetch(`https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`)
             .then(res => res.json())
             .then(res => {
                 setItems(res)
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [categoryId, sortType, searchValue])
+    }, [categoryId, sortType, searchValue, currentPage])
 
     const pizzas = items.map((el, index) => <PizzaBlock key={index} pizza={el}/>)
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
@@ -49,12 +51,9 @@ const Home = ({searchValue, ...props}: PropsType) => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {
-                    isLoading
-                        ? skeletons
-                        : pizzas
-                }
+                { isLoading ? skeletons : pizzas }
             </div>
+            <Pagination setCurrentPage={setCurrentPage}/>
         </div>
     );
 };
