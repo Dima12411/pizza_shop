@@ -21,7 +21,7 @@ const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
                         </div>
                     </div>
                 </Link>
-                <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
+                <Search />
                 <div className="header__cart">
                     <Link to="cart" className="button button--cart">
                         <span>520 ₽</span>

@@ -1,12 +1,10 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useContext} from 'react';
 import styles from './Search.module.scss'
+import {SearchContext} from "../../App";
 
-type PropsType = {
-    searchValue: string
-    setSearchValue: (searchValue: string) => void
-}
+const Search = () => {
 
-const Search = ({searchValue, setSearchValue, ...props}: PropsType) => {
+    const { searchValue, setSearchValue } = useContext(SearchContext)
 
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.currentTarget.value)

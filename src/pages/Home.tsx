@@ -1,21 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/pizzaBlock/Skeleton";
 import PizzaBlock from "../components/pizzaBlock/PizzaBlock";
-import {PizzasObject} from "../App";
+import {PizzasObject, SearchContext} from "../App";
 import Pagination from "../components/Pagination/Pagination";
 
-type PropsType = {
-    searchValue: string
-}
 
 export type sortByType = {
     name: string
     sortProperty: string
 }
 
-const Home = ({searchValue, ...props}: PropsType) => {
+const Home = () => {
     const [items, setItems] = useState<Array<PizzasObject>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [categoryId, setCategoryId] = useState<number>(0)
@@ -24,6 +21,7 @@ const Home = ({searchValue, ...props}: PropsType) => {
         name: 'популярности',
         sortProperty: 'rating'
     })
+    const {searchValue} = useContext(SearchContext)
 
     const sortBy = sortType.sortProperty
     const category = categoryId > 0 ? `category=${categoryId}` : ''
