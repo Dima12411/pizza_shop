@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../redux/store";
+import {setCategoryId} from "../redux/slices/filterSlice";
 
-type PropsType = {
-    categoryId: number
-    setCategoryId: (categoryId: number) => void
-}
-
-const Categories = ({categoryId, setCategoryId, ...props}: PropsType) => {
+const Categories = () => {
+    const dispatch = useDispatch()
+    const categoryId = useSelector<RootStateType, number>(state => state.filter.categoryId)
 
     const category = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
     const onClickCategory = (index: number) => {
-        setCategoryId(index)
+        dispatch(setCategoryId(index))
     }
 
     return (
