@@ -7,7 +7,8 @@ import {PizzasObject, SearchContext} from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../redux/store";
-import {InitialStateType, setCategoryId, SortType} from "../redux/slices/filterSlice";
+import {InitialStateType, setCategoryId} from "../redux/slices/filterSlice";
+import axios from "axios";
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -30,10 +31,18 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`)
+        /*fetch(`https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`)
             .then(res => res.json())
             .then(res => {
                 setItems(res)
+                setIsLoading(false)
+            })*/
+        axios
+            .get(
+                `https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`
+            )
+            .then((res) => {
+                setItems(res.data)
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)

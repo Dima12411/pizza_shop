@@ -1,4 +1,5 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import thunkMiddleware from 'redux-thunk'
 import {filterReducer} from "./slices/filterSlice";
 
 const rootReducer = combineReducers({
@@ -6,7 +7,11 @@ const rootReducer = combineReducers({
 })
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .prepend(thunkMiddleware)
+
 })
 
 export type RootStateType = ReturnType<typeof rootReducer>
