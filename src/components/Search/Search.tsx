@@ -1,18 +1,29 @@
-import React, {ChangeEvent, useContext, useRef} from 'react';
+import React, {ChangeEvent, useCallback, useContext, useRef, useState} from 'react';
+import debounce from 'lodash.debounce'
 import styles from './Search.module.scss'
 import {SearchContext} from "../../App";
 
 const Search = () => {
+    const [value, setValue] = useState('')
     const {searchValue, setSearchValue} = useContext(SearchContext)
     const inputRef = useRef<any>()
 
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.currentTarget.value)
-    }
+    const updateSearchValue = useCallback(
+        debounce((str) => {
+            setSearchValue(str)
+        }, 1000),
+        []
+    )
     const clearInput = () => {
         setSearchValue('')
+        setValue('')
         inputRef.current.focus()
     }
+    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+        updateSearchValue(e.currentTarget.value)
+    }
+
 
 
     return (
