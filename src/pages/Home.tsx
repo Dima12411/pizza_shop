@@ -7,22 +7,25 @@ import {PizzasObject, SearchContext} from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../redux/store";
-import {InitialStateType, setCategoryId} from "../redux/slices/filterSlice";
+import {InitialStateType, setCategoryId, setCurrentPage} from "../redux/slices/filterSlice";
 import axios from "axios";
 
 const Home = () => {
     const dispatch = useDispatch()
-    const {categoryId, sort} = useSelector<RootStateType, InitialStateType>(state => state.filter)
+    const {categoryId, currentPage, sort} = useSelector<RootStateType, InitialStateType>(state => state.filter)
     const sortType = sort.sortProperty
 
 
     const [items, setItems] = useState<Array<PizzasObject>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [currentPage, setCurrentPage] = useState<number>(1)
     const {searchValue} = useContext(SearchContext)
 
     const onChangeCategory = (id: number) => {
         dispatch(setCategoryId(id))
+    }
+
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page))
     }
 
     const sortBy = sortType
@@ -31,12 +34,7 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        /*fetch(`https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`)
-            .then(res => res.json())
-            .then(res => {
-                setItems(res)
-                setIsLoading(false)
-            })*/
+
         axios
             .get(
                 `https://62a07fa2a9866630f81099fb.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=asc${search}`
@@ -61,7 +59,7 @@ const Home = () => {
             <div className="content__items">
                 { isLoading ? skeletons : pizzas }
             </div>
-            <Pagination setCurrentPage={setCurrentPage}/>
+            <Pagination setCurrentPage={onChangePage}/>
         </div>
     );
 };
