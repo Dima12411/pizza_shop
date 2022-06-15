@@ -41,7 +41,7 @@ const Search = () => {
                 className={styles.input}
                 placeholder="Поиск пиццы ..."
                 onChange={onChangeInput}
-                value={searchValue}
+                value={value}
             />
             {
                 searchValue && (
