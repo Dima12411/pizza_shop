@@ -2,6 +2,9 @@ import React from 'react';
 import logoSvg from '../assets/img/pizza-logo.svg'
 import {Link} from "react-router-dom";
 import Search from "./Search/Search";
+import {useSelector} from "react-redux";
+import {RootStateType} from "../redux/store";
+import {InitialStateType} from "../redux/slices/cartSlice";
 
 type PropsType = {
     searchValue: string
@@ -9,6 +12,8 @@ type PropsType = {
 }
 
 const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
+    const {items, totalPrice} = useSelector<RootStateType, InitialStateType>(state => state.cart)
+
     return (
         <div className="header">
             <div className="container">
@@ -24,7 +29,7 @@ const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
                 <Search />
                 <div className="header__cart">
                     <Link to="cart" className="button button--cart">
-                        <span>520 ₽</span>
+                        <span>{totalPrice} ₽</span>
                         <div className="button__delimiter"></div>
                         <svg
                             width="18"
@@ -55,7 +60,7 @@ const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>3</span>
+                        <span>{items.length}</span>
                     </Link>
                 </div>
             </div>

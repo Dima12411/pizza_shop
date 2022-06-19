@@ -1,22 +1,30 @@
 import React, {useState} from 'react';
 import {PizzasObject} from "../../App";
+import {useDispatch} from "react-redux";
+import {addItem} from "../../redux/slices/cartSlice";
 
 type PropsType = {
-    /*id: number
-    title: string
-    imageUrl: string
-    price: number
-    sizes: Array<number>
-    types: Array<number>*/
     pizza: PizzasObject
 }
 
-const PizzaBlock = ({pizza, ...props}: PropsType) => {
+const typeNames = ['тонкое', 'традиционное']
 
+const PizzaBlock = ({pizza, ...props}: PropsType) => {
+    const dispatch = useDispatch()
     const [sizeIndex, setSizeIndex] = useState<number>(0)
     const [typePizza, setTypePizza] = useState<number>(0)
 
-    const typeNames = ['тонкое', 'традиционное']
+    const onClickAdd = () => {
+        const item = {
+            id: pizza.id,
+            title: pizza.title,
+            price: pizza.price,
+            imageUrl: pizza.imageUrl,
+            type: typeNames[typePizza],
+            size: sizeIndex
+        }
+        dispatch(addItem(item))
+    }
 
     return (
         <div className="pizza-block-wrapper">
@@ -55,7 +63,8 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
                 </div>
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">от {pizza.price} ₽</div>
-                    <button className="button button--outline button--add">
+                    <button className="button button--outline button--add"
+                            onClick={onClickAdd}>
                         <svg
                             width="12"
                             height="12"
