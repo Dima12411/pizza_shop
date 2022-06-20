@@ -14,6 +14,8 @@ type PropsType = {
 const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
     const {items, totalPrice} = useSelector<RootStateType, CartInitialStateType>(state => state.cart)
 
+    const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+
     return (
         <div className="header">
             <div className="container">
@@ -60,7 +62,7 @@ const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>{items.length}</span>
+                        <span>{totalCount}</span>
                     </Link>
                 </div>
             </div>
