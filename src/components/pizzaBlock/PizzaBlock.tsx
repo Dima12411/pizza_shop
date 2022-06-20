@@ -16,8 +16,6 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
     const [sizeIndex, setSizeIndex] = useState<number>(0)
     const [typePizza, setTypePizza] = useState<number>(0)
 
-    console.log(cartItem)
-
     const addedCount = cartItem ? cartItem.count : 0
 
     const onClickAdd = () => {
