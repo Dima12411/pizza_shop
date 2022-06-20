@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {PizzasObject} from "../../App";
-import {useDispatch} from "react-redux";
-import {addItem} from "../../redux/slices/cartSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem, ItemsType} from "../../redux/slices/cartSlice";
+import {RootStateType} from "../../redux/store";
 
 type PropsType = {
     pizza: PizzasObject
@@ -11,8 +12,13 @@ const typeNames = ['тонкое', 'традиционное']
 
 const PizzaBlock = ({pizza, ...props}: PropsType) => {
     const dispatch = useDispatch()
+    const cartItem = useSelector<RootStateType, any>(state => state.cart.items.find(obj => obj.id === pizza.id))
     const [sizeIndex, setSizeIndex] = useState<number>(0)
     const [typePizza, setTypePizza] = useState<number>(0)
+
+    console.log(cartItem)
+
+    const addedCount = cartItem ? cartItem.count : 0
 
     const onClickAdd = () => {
         const item = {
@@ -21,7 +27,8 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
             price: pizza.price,
             imageUrl: pizza.imageUrl,
             type: typeNames[typePizza],
-            size: sizeIndex
+            size: sizeIndex,
+            count: 0
         }
         dispatch(addItem(item))
     }
@@ -78,7 +85,7 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
                             />
                         </svg>
                         <span>Добавить</span>
-                        <i>0</i>
+                        {addedCount > 0 && <i>{addedCount}</i>}
                     </button>
                 </div>
             </div>

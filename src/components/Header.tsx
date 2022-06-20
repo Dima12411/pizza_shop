@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Search from "./Search/Search";
 import {useSelector} from "react-redux";
 import {RootStateType} from "../redux/store";
-import {InitialStateType} from "../redux/slices/cartSlice";
+import {CartInitialStateType} from "../redux/slices/cartSlice";
 
 type PropsType = {
     searchValue: string
@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 const Header = ({searchValue, setSearchValue, ...props}: PropsType) => {
-    const {items, totalPrice} = useSelector<RootStateType, InitialStateType>(state => state.cart)
+    const {items, totalPrice} = useSelector<RootStateType, CartInitialStateType>(state => state.cart)
 
     return (
         <div className="header">

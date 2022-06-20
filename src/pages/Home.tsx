@@ -7,7 +7,7 @@ import {PizzasObject, SearchContext} from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../redux/store";
-import {InitialStateType, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
+import {FilterInitialStateType, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import axios from "axios";
 import qs from 'qs'
 import {useNavigate} from "react-router-dom";
@@ -17,7 +17,7 @@ const Home = () => {
     const dispatch = useDispatch()
     const isSearch = useRef(false)
     const isMounted = useRef(false)
-    const {categoryId, currentPage, sort} = useSelector<RootStateType, InitialStateType>(state => state.filter)
+    const {categoryId, currentPage, sort} = useSelector<RootStateType, FilterInitialStateType>(state => state.filter)
     const sortType = sort.sortProperty
 
 
