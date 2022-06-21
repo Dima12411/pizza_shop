@@ -2,12 +2,18 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../redux/store";
-import {ItemsType} from "../redux/slices/cartSlice";
+import {clearItems, ItemsType} from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 
 const Cart = () => {
     const dispatch = useDispatch()
     const items = useSelector<RootStateType, Array<ItemsType>>(state => state.cart.items)
+
+    const onClickClearItems = () => {
+        if (window.confirm('Ты действительно хочешь удалить все товары?')) {
+            dispatch(clearItems())
+        }
+    }
 
     return (
         <div className="container container--cart">
@@ -27,7 +33,7 @@ const Cart = () => {
                         </svg>
                         Корзина
                     </h2>
-                    <div className="cart__clear">
+                    <div onClick={onClickClearItems} className="cart__clear">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.5 5H4.16667H17.5" stroke="#B6B6B6" stroke-width="1.2" stroke-linecap="round"
                                   stroke-linejoin="round"></path>
