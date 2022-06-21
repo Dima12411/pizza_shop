@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {PizzasObject} from "../../App";
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, ItemsType} from "../../redux/slices/cartSlice";
+import {addItem} from "../../redux/slices/cartSlice";
 import {RootStateType} from "../../redux/store";
 
 type PropsType = {
@@ -25,7 +25,7 @@ const PizzaBlock = ({pizza, ...props}: PropsType) => {
             price: pizza.price,
             imageUrl: pizza.imageUrl,
             type: typeNames[typePizza],
-            size: sizeIndex,
+            size: pizza.sizes[sizeIndex],
             count: 0
         }
         dispatch(addItem(item))

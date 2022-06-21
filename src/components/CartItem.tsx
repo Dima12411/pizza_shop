@@ -30,7 +30,7 @@ const CartItem = ({item, ...props}: PropsType) => {
             </div>
             <div className="cart__item-info">
                 <h3>{item.title}</h3>
-                <p>{item.type}, {item.size}.</p>
+                <p>{item.type}, {item.size} см.</p>
             </div>
             <div className="cart__item-count">
                 <div onClick={onClickMinus} className="button button--outline button--circle cart__item-count-minus">
